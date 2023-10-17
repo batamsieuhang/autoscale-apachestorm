@@ -1,0 +1,11 @@
+- name: install docker
+  hosts:
+    - Broker
+    - Apachestorm
+    - zookeeper
+  become: true
+  gather_facts: true
+  roles:
+    - common
+
+
