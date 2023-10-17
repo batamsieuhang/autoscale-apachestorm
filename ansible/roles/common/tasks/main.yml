@@ -1,5 +1,5 @@
 ---
-# tasks file for roles/common
+#tasks file for roles/common
 - name: updating apt packages
   ansible.builtin.shell: apt update
 
@@ -34,3 +34,6 @@
 
 - name: add user to Docker group
   shell: "usermod -aG docker cloud_user"
+
+- name: install docker compose
+  ansible.builtin.shell: apt install docker-compose-plugin
