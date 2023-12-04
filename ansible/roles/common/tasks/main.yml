@@ -33,7 +33,7 @@
         update_cache: true
 
 - name: add user to Docker group
-  shell: "usermod -aG docker cloud_user"
+  shell: "usermod -aG docker tuda2"
 
 - name: install docker compose
   ansible.builtin.shell: apt install docker-compose-plugin

@@ -1,8 +1,5 @@
 - name: install docker
-  hosts:
-    - Broker
-    - Apachestorm
-    - zookeeper
+  hosts: localhost
   become: true
   gather_facts: true
   roles:
