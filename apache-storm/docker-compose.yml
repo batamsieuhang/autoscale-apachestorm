@@ -4,29 +4,52 @@ services:
   zookeeper:
     image: zookeeper
     container_name: zookeeper
-    restart: always
+    networks:
+      storm_network:
+        ipv4_address: 172.18.0.2
+    # Add this volume to the zookeeper service in docker-compose.yml
+    volumes:
+      - ./config/zoo.cfg:/apache-zookeeper-3.9.1-bin/conf/zoo.cfg
+
 
   nimbus:
     image: storm
     container_name: nimbus
     command: storm nimbus
-    depends_on:
-      - zookeeper
-    links:
-      - zookeeper
-    restart: always
+    volumes:
+      - ./config/storm-nimbus.yaml:/apache-storm-2.5.0/conf/storm.yaml
+    networks:
+      storm_network:
+        ipv4_address: 172.18.0.3
     ports:
       - 6627:6627
-      - 8080:8080
+      
 
   supervisor:
     image: storm
     container_name: supervisor
     command: storm supervisor
-    depends_on:
-      - nimbus
-      - zookeeper
-    links:
-      - nimbus
-      - zookeeper
-    restart: always
+    volumes:
+      - ./config/storm-nimbus.yaml:/apache-storm-2.5.0/conf/storm.yaml
+    networks:
+      storm_network:
+        ipv4_address: 172.18.0.4
+
+  ui:
+    image: storm
+    container_name: ui
+    command: storm ui
+    volumes:
+      - ./config/storm-nimbus.yaml:/apache-storm-2.5.0/conf/storm.yaml
+    networks:
+      storm_network:
+        ipv4_address: 172.18.0.5
+    ports:
+      - 8080:8080
+
+networks:
+  storm_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
