@@ -2,10 +2,12 @@ import csv
 import time
 import paho.mqtt.client as mqtt
 
+# test publisher and broker
+
 # Define the broker and topic
 broker_address = "192.168.60.154"  # Replace with your MQTT broker's IP address
 port = 1883  # Default MQTT port
-topic = "test_topic"  # The topic you want to subscribe to
+topic = "iot-data"  # The topic you want to subscribe to
 
 # Callback when the client connects to the broker
 def on_connect(client, userdata, flags, rc):
